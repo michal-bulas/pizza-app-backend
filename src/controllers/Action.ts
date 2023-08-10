@@ -27,11 +27,13 @@ const readAction = (req: Request, res: Response, next: NextFunction) => {
   const actionId = req.params.actionId;
 
   return Action.findById(actionId)
+    .select('-__v')
     .then((action) => (action ? res.status(200).json({ action }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
 const readAllAction = (req: Request, res: Response, next: NextFunction) => {
   return Action.find()
+    .select('-__v')
     .then((actions) => res.status(200).json({ actions }))
     .catch((error) => res.status(500).json({ error }));
 };

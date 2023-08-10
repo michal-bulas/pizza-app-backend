@@ -30,12 +30,13 @@ const readIngredient = (req: Request, res: Response, next: NextFunction) => {
 
   return Ingredient.findById(ingredientId)
     .populate('ingredient')
+    .select('-__v')
     .then((ingredient) => (ingredient ? res.status(200).json({ ingredient }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
 const readAllIngredient = (req: Request, res: Response, next: NextFunction) => {
   return Ingredient.find()
-    .populate('ingredient')
+    .select('-__v')
     .then((ingredients) => res.status(200).json({ ingredients }))
     .catch((error) => res.status(500).json({ error }));
 };
