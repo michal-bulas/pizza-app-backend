@@ -2,15 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Action from '../models/Action';
 
-export const saveAction = async (name: string) => {
-  const action = new Action({
-    _id: new mongoose.Types.ObjectId(),
-    name
-  });
-  return await action.save();
-};
-
-const createAction = (req: Request, res: Response, next: NextFunction) => {
+const postAction = (req: Request, res: Response, next: NextFunction) => {
   const { name } = req.body;
 
   const action = new Action({
@@ -23,7 +15,8 @@ const createAction = (req: Request, res: Response, next: NextFunction) => {
     .then((action) => res.status(201).json({ action }))
     .catch((error) => res.status(500).json({ error }));
 };
-const readAction = (req: Request, res: Response, next: NextFunction) => {
+
+const getActionById = (req: Request, res: Response, next: NextFunction) => {
   const actionId = req.params.actionId;
 
   return Action.findById(actionId)
@@ -31,12 +24,14 @@ const readAction = (req: Request, res: Response, next: NextFunction) => {
     .then((action) => (action ? res.status(200).json({ action }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
-const readAllAction = (req: Request, res: Response, next: NextFunction) => {
+
+const getAllActions = (req: Request, res: Response, next: NextFunction) => {
   return Action.find()
     .select('-__v')
     .then((actions) => res.status(200).json({ actions }))
     .catch((error) => res.status(500).json({ error }));
 };
+
 const updateAction = (req: Request, res: Response, next: NextFunction) => {
   const actionId = req.params.actionId;
 
@@ -54,6 +49,7 @@ const updateAction = (req: Request, res: Response, next: NextFunction) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
 const deleteAction = (req: Request, res: Response, next: NextFunction) => {
   const actionId = req.params.actionId;
 
@@ -62,4 +58,4 @@ const deleteAction = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-export default { createAction, readAction, readAllAction, updateAction, deleteAction };
+export default { postAction, getActionById, getAllActions, updateAction, deleteAction };

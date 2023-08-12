@@ -2,16 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Ingredient from '../models/Ingredient';
 
-export const saveIngredient = async (name: string, action: string) => {
-  const ingredient = new Ingredient({
-    _id: new mongoose.Types.ObjectId(),
-    name,
-    action
-  });
-  return await ingredient.save();
-};
-
-const createIngredient = (req: Request, res: Response, next: NextFunction) => {
+const postIngredient = (req: Request, res: Response, next: NextFunction) => {
   const { name, action } = req.body;
 
   const ingredient = new Ingredient({
@@ -25,7 +16,8 @@ const createIngredient = (req: Request, res: Response, next: NextFunction) => {
     .then((ingredient) => res.status(201).json({ ingredient }))
     .catch((error) => res.status(500).json({ error }));
 };
-const readIngredient = (req: Request, res: Response, next: NextFunction) => {
+
+const getIngredientById = (req: Request, res: Response, next: NextFunction) => {
   const ingredientId = req.params.ingredientId;
 
   return Ingredient.findById(ingredientId)
@@ -34,12 +26,14 @@ const readIngredient = (req: Request, res: Response, next: NextFunction) => {
     .then((ingredient) => (ingredient ? res.status(200).json({ ingredient }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
-const readAllIngredient = (req: Request, res: Response, next: NextFunction) => {
+
+const getAlIngredients = (req: Request, res: Response, next: NextFunction) => {
   return Ingredient.find()
     .select('-__v')
     .then((ingredients) => res.status(200).json({ ingredients }))
     .catch((error) => res.status(500).json({ error }));
 };
+
 const updateIngredient = (req: Request, res: Response, next: NextFunction) => {
   const ingredientId = req.params.ingredientId;
 
@@ -57,6 +51,7 @@ const updateIngredient = (req: Request, res: Response, next: NextFunction) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
 const deleteIngredient = (req: Request, res: Response, next: NextFunction) => {
   const ingredientId = req.params.ingredientId;
 
@@ -65,4 +60,4 @@ const deleteIngredient = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-export default { createIngredient, readIngredient, readAllIngredient, updateIngredient, deleteIngredient };
+export default { postIngredient, getIngredientById, getAlIngredients, updateIngredient, deleteIngredient };

@@ -4,10 +4,10 @@ import { Schemas, ValidateSchema } from '../middleware/ValidateSchema';
 
 const router = express.Router();
 
-router.post('/create', ValidateSchema(Schemas.pizza.create), controller.createPizza);
-router.get('/get/:pizzaId', controller.readPizza);
-router.get('/get', controller.readAllPizza);
+router.post('/create', ValidateSchema(Schemas.pizza.create), controller.postPizza);
+router.get('/get/:pizzaId', controller.getPizzaById);
+router.get('/get', controller.getAllPizzas);
 router.patch('/update/:pizzaId', ValidateSchema(Schemas.pizza.update), controller.updatePizza);
-router.delete('/delete/:ingredientId', controller.deletePizza);
+router.delete('/delete/:pizzaId', controller.deletePizza);
 
 export = router;
