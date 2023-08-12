@@ -22,16 +22,12 @@ const getPizzaById = (req: Request, res: Response, next: NextFunction) => {
   const pizzaId = req.params.pizzaId;
 
   return Pizza.findById(pizzaId)
-    .populate('ingredient')
-    .populate('action')
-    .select('-__v')
     .then((pizza) => (pizza ? res.status(200).json({ pizza }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
 
 const getAllPizzas = (req: Request, res: Response, next: NextFunction) => {
   return Pizza.find()
-    .select('-__v')
     .then((pizzas) => res.status(200).json({ pizzas }))
     .catch((error) => res.status(500).json({ error }));
 };
