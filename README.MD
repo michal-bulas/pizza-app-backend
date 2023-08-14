@@ -1,4 +1,5 @@
 # Project setup
 
-- Please use Node version 20.5.0 or 'nvm use' for correct version
+- Please use Node version 18.17.0 or 'nvm use' for correct version
 - Create .env file base on example
+- Database have open network access with test user allowed only to read.

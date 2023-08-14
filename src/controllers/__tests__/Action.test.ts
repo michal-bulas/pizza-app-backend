@@ -1,6 +1,4 @@
-// actions.test.ts
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
 import Action from '../../models/Action';
 import actions from '../Action';
 

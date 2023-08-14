@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
 import Ingredient from '../../models/Ingredient';
 import ingredient from '../Ingredient';
 
