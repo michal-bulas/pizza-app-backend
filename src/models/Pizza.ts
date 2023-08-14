@@ -8,10 +8,13 @@ export interface IPizza {
 
 export interface IPizzaModel extends IPizza, Document {}
 
-const PizzaSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  ingredient: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient' }],
-  action: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Action' }]
-});
+const PizzaSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true },
+    ingredient: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient' }],
+    action: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Action' }]
+  },
+  { collection: 'pizzas' }
+);
 
 export default mongoose.model<IPizzaModel>('Pizza', PizzaSchema);

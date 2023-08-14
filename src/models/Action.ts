@@ -6,8 +6,11 @@ export interface IAction {
 
 export interface IActionModel extends IAction, Document {}
 
-const ActionSchema: Schema = new Schema({
-  name: { type: String, required: true }
-});
+const ActionSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true }
+  },
+  { collection: 'actions' }
+);
 
 export default mongoose.model<IActionModel>('Action', ActionSchema);

@@ -7,9 +7,12 @@ export interface IIngredient {
 
 export interface IIngredientModel extends IIngredient, Document {}
 
-const IngredientSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  action: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Action' }
-});
+const IngredientSchema: Schema = new Schema(
+  {
+    name: { type: String, required: true },
+    action: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Action' }
+  },
+  { collection: 'ingredients' }
+);
 
 export default mongoose.model<IIngredientModel>('Ingredient', IngredientSchema);
