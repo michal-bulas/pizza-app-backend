@@ -1,5 +1,5 @@
 {
-  "name": "lignumsoft-backend",
+  "name": "pizza-app-backend",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
