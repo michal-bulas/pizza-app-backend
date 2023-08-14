@@ -21,12 +21,21 @@ const getIngredientById = (req: Request, res: Response, next: NextFunction) => {
   const ingredientId = req.params.ingredientId;
 
   return Ingredient.findById(ingredientId)
+    .populate('action')
     .then((ingredient) => (ingredient ? res.status(200).json({ ingredient }) : res.sendStatus(404).json({ message: 'Not found' })))
     .catch((error) => res.status(500).json({ error }));
 };
 
 const getAlIngredients = (req: Request, res: Response, next: NextFunction) => {
   return Ingredient.find()
+    .then((ingredients) => res.status(200).json({ ingredients }))
+    .catch((error) => res.status(500).json({ error }));
+};
+
+const getIngredientsByAction = (req: Request, res: Response, next: NextFunction) => {
+  const ActionId = req.params.actionId;
+
+  return Ingredient.find({ action: ActionId })
     .then((ingredients) => res.status(200).json({ ingredients }))
     .catch((error) => res.status(500).json({ error }));
 };
@@ -43,7 +52,7 @@ const updateIngredient = (req: Request, res: Response, next: NextFunction) => {
           .then((ingredient) => res.status(201).json({ ingredient }))
           .catch((error) => res.status(500).json({ error }));
       } else {
-        res.sendStatus(404).json({ message: 'Not found' });
+        res.status(404).json({ message: 'Not found' });
       }
     })
     .catch((error) => res.status(500).json({ error }));
@@ -57,4 +66,4 @@ const deleteIngredient = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-export default { postIngredient, getIngredientById, getAlIngredients, updateIngredient, deleteIngredient };
+export default { postIngredient, getIngredientById, getAlIngredients, getIngredientsByAction, updateIngredient, deleteIngredient };

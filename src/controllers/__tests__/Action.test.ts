@@ -14,7 +14,6 @@ describe('Actions Controller', () => {
   let req: Partial<Request>;
   let res: Partial<Response>;
   const next: NextFunction = jest.fn();
-  const mockSave = jest.fn();
 
   beforeEach(() => {
     req = {
